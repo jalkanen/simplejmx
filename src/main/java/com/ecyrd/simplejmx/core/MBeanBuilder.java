@@ -20,6 +20,17 @@ public class MBeanBuilder
         return new SimpleMBean( mbean );
     }
     
+    /**
+     *  Registers an MBean.  If the MBean with the matching ObjectName already exists, removes it prior to 
+     *  registering this one.
+     *  
+     *  @param mbean Object to register.  It's expected to have an MBean annotation.
+     *  @throws MBeanException
+     *  @throws NotCompliantMBeanException
+     *  @throws InstanceAlreadyExistsException
+     *  @throws MalformedObjectNameException
+     *  @throws NullPointerException
+     */
     public static void registerMBean( Object mbean ) throws MBeanException, NotCompliantMBeanException, InstanceAlreadyExistsException, MalformedObjectNameException, NullPointerException
     {
         MBeanServer mbeanServer = ManagementFactory.getPlatformMBeanServer();
@@ -27,10 +38,16 @@ public class MBeanBuilder
         SimpleMBean smb = createMBean(mbean);
         ObjectName  on  = smb.getObjectName();
         
-        if( !mbeanServer.isRegistered(on) )
+        if( mbeanServer.isRegistered(on) )
         {
-            mbeanServer.registerMBean( smb, on );
+            try
+            {
+                mbeanServer.unregisterMBean(on);
+            }
+            catch( InstanceNotFoundException e ) {};
         }
+        
+        mbeanServer.registerMBean( smb, on );
     }
     
     public static void unregisterMBean( Object mbean )
