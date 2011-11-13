@@ -26,6 +26,12 @@ import com.ecyrd.simplejmx.ManagedAttribute;
 import com.ecyrd.simplejmx.ManagedOperation;
 import com.ecyrd.simplejmx.SimpleJMXException;
 
+/**
+ *  This is the actual implementation of the DynamicMBean which builds the necessary
+ *  data structures for JMX registration.
+ *  <p>
+ *  In normal use, you should just let MBeanBuilder handle the management of SimpleMBeans.
+ */
 public class SimpleMBean implements DynamicMBean
 {
     private Object m_object;
@@ -34,6 +40,13 @@ public class SimpleMBean implements DynamicMBean
     private HashMap<String,SimpleMethod>    m_operations    = new HashMap<String,SimpleMethod>();
     private MBeanInfo m_beanInfo;
     
+    /**
+     *  Create a SimpleMBean by wrapping an object annotated with {@link MBean}.
+     *  
+     *  @param mbean An object to wrap.  The object must be annotated with {@link MBean}.
+     *  @throws NotCompliantMBeanException If the object is not annotated with MBean or has some
+     *          other reason why it cannot be installed as an MBean.
+     */
     public SimpleMBean( Object mbean ) throws NotCompliantMBeanException
     {
         m_object = mbean;

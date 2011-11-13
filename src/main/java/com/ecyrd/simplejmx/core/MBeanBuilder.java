@@ -21,6 +21,9 @@ import javax.management.*;
 
 import com.ecyrd.simplejmx.MBean;
 
+/**
+ *  This is the main entry point for the management of SimpleJMX MBeans.
+ */
 public class MBeanBuilder
 {
     private static boolean isMBean(Object o)
@@ -28,6 +31,13 @@ public class MBeanBuilder
         return o.getClass().isAnnotationPresent(MBean.class);
     }
     
+    /**
+     *  Creates a SimpleMBean.
+     *  
+     *  @param mbean
+     *  @return
+     *  @throws NotCompliantMBeanException
+     */
     public static SimpleMBean createMBean(Object mbean) throws NotCompliantMBeanException
     {
         if( !isMBean(mbean) ) return null;
@@ -44,9 +54,8 @@ public class MBeanBuilder
      *  @throws NotCompliantMBeanException
      *  @throws InstanceAlreadyExistsException
      *  @throws MalformedObjectNameException
-     *  @throws NullPointerException
      */
-    public static void registerMBean( Object mbean ) throws MBeanException, NotCompliantMBeanException, InstanceAlreadyExistsException, MalformedObjectNameException, NullPointerException
+    public static void registerMBean( Object mbean ) throws MBeanException, NotCompliantMBeanException, InstanceAlreadyExistsException, MalformedObjectNameException
     {
         MBeanServer mbeanServer = ManagementFactory.getPlatformMBeanServer();
         
@@ -65,6 +74,11 @@ public class MBeanBuilder
         mbeanServer.registerMBean( smb, on );
     }
     
+    /**
+     *  Unregisters a given object.  Obviously, the object must be annotated with {@link MBean}.
+     *  
+     *  @param mbean
+     */
     public static void unregisterMBean( Object mbean )
     {
         MBeanServer mbeanServer = ManagementFactory.getPlatformMBeanServer();
