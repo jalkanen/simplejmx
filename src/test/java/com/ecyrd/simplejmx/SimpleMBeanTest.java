@@ -58,6 +58,24 @@ public class SimpleMBeanTest
         assertEquals( "blob", tmb.callableValue );
     }
     
+    @Test
+    public void getNoName() throws NotCompliantMBeanException, MalformedObjectNameException
+    {
+        NoNameMBean nmb = new NoNameMBean();
+        
+        SimpleMBean smb = new SimpleMBean(nmb);
+        
+        ObjectName on = smb.getObjectName();
+        
+        assertEquals("com.ecyrd.simplejmx:name=NoNameMBean", on.getCanonicalName());
+    }
+    
+    @MBean
+    public static class NoNameMBean
+    {
+        
+    }
+    
     @MBean(description="This is a test bean", 
            name="com.ecyrd.simplejmx:name=TestMBean")
     public static class TestMBean

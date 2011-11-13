@@ -370,9 +370,21 @@ public class SimpleMBean implements DynamicMBean
         throw new NotCompliantMBeanException("Object must be annotated with @MBean and have a proper name attribute");
     }
     
-    public ObjectName getObjectName() throws MalformedObjectNameException, NullPointerException
+    /**
+     *  Generates a valid ObjectName.  If the mbean name attribute is not set, uses the class name.
+     *  
+     *  @return
+     *  @throws MalformedObjectNameException
+     *  @throws NullPointerException
+     */
+    public ObjectName getObjectName() throws MalformedObjectNameException
     {
-        if( m_mbean.name() == null ) return new ObjectName( m_object.getClass().getName() );
-        return new ObjectName(m_mbean.name());
+        if( m_mbean.name().length() > 0 )
+            return new ObjectName(m_mbean.name());
+        
+        String packageName = m_object.getClass().getPackage().getName();
+        String className   = m_object.getClass().getSimpleName();
+        
+        return new ObjectName( packageName + ":name="+className );
     }
 }
