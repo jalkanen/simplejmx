@@ -18,6 +18,11 @@ package com.ecyrd.simplejmx;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+/**
+ *  A marker for classes which need to be exposed as JMX MBeans.
+ */
+
+// TODO: Add more description!
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MBean
 {

@@ -15,6 +15,15 @@
 */
 package com.ecyrd.simplejmx;
 
+/**
+ *  A Runtime exception which may be thrown in case there's something
+ *  wrong with the MBean.  Typically, this method wraps any JMX exceptions
+ *  that we might encounter.
+ *  <p>
+ *  The reason why this is a RuntimeException is that libraries shouldn't
+ *  expose complicated Exception management to applications.  This will result
+ *  in cleaner code.
+ */
 public class SimpleJMXException extends RuntimeException
 {
     private static final long serialVersionUID = 1L;
