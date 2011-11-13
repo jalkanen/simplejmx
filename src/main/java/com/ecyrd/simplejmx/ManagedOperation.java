@@ -18,9 +18,47 @@ package com.ecyrd.simplejmx;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+/**
+ *  Marks a method to be exposed as a JMX operation for any POJO object
+ *  which has the {@link MBean} annotation.
+ *  
+ *  @see {@link MBean}, {@link ManagedAttribute}.
+ */
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ManagedOperation
 {
+    /**
+     *  Sets the name of the method to expose.  You typically use this
+     *  to make sure that refactorings don't change the JMX interface.  For example,
+     *  
+     *  <pre>
+     *     @ManagedOperation
+     *     public void doStuff()
+     *     { ... }
+     *  </pre>
+     *  
+     *  If you refactor the doStuff() you might want to do this
+     *  
+     *  <pre>
+     *     @ManagedOperation(name="doStuff")
+     *     public void refactoredName()
+     *     { ... }
+     *  </pre>
+     *  
+     *  @return A text string for the method name to expose.
+     */
     String name() default "";
+    
+    /**
+     *  A textual description for this ManagedOperation which should then be visible
+     *  in the management interface.  For example
+     *  
+     *  <pre>
+     *    @ManagedOperation(description="Calculates the statistics.  Be warned, this may take a long time.")
+     *    public void calcStats()
+     *    { ... }
+     *  </pre>
+     * @return
+     */
     String description() default "";
 }
