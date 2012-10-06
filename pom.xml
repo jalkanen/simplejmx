@@ -17,7 +17,7 @@
 
   <groupId>com.ecyrd.simplejmx</groupId>
   <artifactId>simplejmx</artifactId>
-  <version>0.1-SNAPSHOT</version>
+  <version>0.1</version>
   <packaging>jar</packaging>
   <description>SimpleJmx is a simple, Apache-licensed library which allows you
                to use simple annotations to make JMX MBeans without any
